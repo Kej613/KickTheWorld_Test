@@ -9,6 +9,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class OrderDto {
+    //예약할 숙소의 아이디와 숙박일수를 전달받을 DTO
 
     @NotNull(message = "숙소아이디는 필수 입력 값입니다.")
     private Long stay_id;

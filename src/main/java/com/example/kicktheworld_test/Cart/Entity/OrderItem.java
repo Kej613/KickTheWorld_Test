@@ -41,22 +41,7 @@ public class OrderItem {
         stay.removeStay(count);
         return orderItem;
     }
-//    public static OrderItem createOrderItem(Stay stay, int count) {
-//            OrderItem orderItem = new OrderItem();
-//            orderItem.setStay(stay);
-//            orderItem.setCount(count);
-//
-//            int orderPrice;
-//            try {
-//                orderPrice = Integer.parseInt(stay.getPrice()); //oderPrice를 int로 변환
-//            } catch (NumberFormatException e) {
-//                orderPrice = 0;
-//            }
-//            orderItem.setOrderPrice(orderPrice);
-//
-//            stay.removeStay(count);
-//            return orderItem;
-//    }
+
     public int getTotalPrice(){
         return orderPrice*count;
     }

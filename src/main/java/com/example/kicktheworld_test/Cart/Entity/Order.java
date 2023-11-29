@@ -36,12 +36,14 @@ public class Order {
 
     private LocalDateTime updateTime;
 
-    //숙소추가
+
+    //예약한 숙소 정보들을 담아둠
     public void addOrderItem(OrderItem orderItem) {
         orderItems.add(orderItem);
         orderItem.setOrder(this);
     }
 
+    //숙소를 예약한 회원정보 세팅
     public static Order createOrder(Member member, List<OrderItem> orderItemList) {
         Order order = new Order();
         order.setMember(member);

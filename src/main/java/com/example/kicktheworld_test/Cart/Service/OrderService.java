@@ -32,15 +32,16 @@ public class OrderService {
 
     public Long order(OrderDto orderDto, String memId) {
 
-        Stay stay = stayRepository.findById(orderDto.getStay_id())
+        Stay stay = stayRepository.findById(orderDto.getStay_id())    // 예약할 숙소를 조회
                 .orElseThrow(EntityNotFoundException::new);
 
-        Member member = memberRepository.findByMemId(memId);
+        Member member = memberRepository.findByMemId(memId);  //현재 로그인한 회원의 아이디를 이용해 회원 정보 조회
 
         List<OrderItem> orderItemList = new ArrayList<>();
         OrderItem orderItem = OrderItem.createOrderItem(stay, orderDto.getCount());
         orderItemList.add(orderItem);
-        Order order = Order.createOrder(member, orderItemList);
+        Order order = Order.createOrder(member, orderItemList);    // 숙소 정보 저장
+
         orderRepository.save(order);
 
         return order.getId();
