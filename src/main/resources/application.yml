@@ -26,21 +26,5 @@ spring:
       maxFileSize: 20MB
       maxRequestSize: 100MB
 
-#tripImgLocation: C:/trip/tripimages
-#uploadPath: file:///C:/trip/
-
-#tripImgLocation: classpath:/static/images/trip
-
-
-#  servlet:
-#    multipart:
-#      enabled: true
-#      location: C:\\upload
-#      max-request-size: 30MB
-#      max-file-size: 10MB
-#com:
-#  example:
-#    upload:
-#      path: C:\\upload
 server:
   port: 9000

@@ -43,7 +43,6 @@ public class StayService {
     }
 
     public List<Stay> findAll() {
-
         return stayRepository.findAll();
     }
 

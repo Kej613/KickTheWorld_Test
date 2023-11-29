@@ -1,4 +1,4 @@
-package com.example.kicktheworld_test.Exception;
+package com.example.kicktheworld_test.Cart.Exception;
 
 public class OutOfStockException extends RuntimeException {
     public OutOfStockException(String message) {

@@ -1,6 +1,6 @@
 package com.example.kicktheworld_test.Stay.Entity;
 
-import com.example.kicktheworld_test.Exception.OutOfStockException;
+import com.example.kicktheworld_test.Cart.Exception.OutOfStockException;
 import com.example.kicktheworld_test.Stay.Constant.StaySellStatus;
 import jakarta.persistence.*;
 import lombok.*;
@@ -8,9 +8,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @EntityListeners(AuditingEntityListener.class)
 @Table (name="stay")
