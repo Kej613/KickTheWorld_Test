@@ -1,14 +1,84 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
   <title>MainPage</title>
   <link th:href="@{/css/main.css}" rel="stylesheet" />
+  <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}">
+  <style>
+    @font-face {
+      font-family: 'Pretendard-Regular';
+      src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+      font-weight: 400;
+      font-style: normal;
+    }
+    body{
+      font-family: 'Pretendard-Regular';
+    }
+    p {
+      font-family: 'Pretendard-Regular';
+    }
+    h2{
+      font-family: 'Pretendard-Regular';
+      font-size: 20px;
+
+    }
+    select{
+      margin-right:10px;
+    }
+    footer {
+      background-color: #333;
+      color: #fff;
+      padding: 30px 0;
+    }
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .footer-content {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+    }
+
+    .footer-section {
+      flex: 1;
+      margin-right: 20px;
+      text-align:center;
+    }
+
+    .footer-section h2 {
+      color: #fff;
+      margin-bottom: 10px;
+      text-align:center;
+    }
+
+    .footer-section p {
+      font-size: 0.9em;
+      line-height: 1.4em;
+      color: #aaa;
+      text-align:center;
+    }
+
+    .footer-section a {
+      color: #fff;
+      text-decoration: none;
+    }
+
+    .footer-section ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .footer-section li {
+      margin-bottom: 8px;
+    }
+
+  </style>
 </head>
 <body>
   <header>
-    <a href="/"><img class="logo" src="/images/Logo.png" alt="Logo Image" /></a>
+    <a href="/"><img class="logo" th:src="@{/images/Logo.png}" alt="Logo Image" /></a>
     <nav>
       <ul>
         <li class="main_list"><a class="main" href="/">여행지 추천</a></li>
@@ -16,47 +86,43 @@
           <a class="main" href="#">여행 정보</a>
           <div class="dropdown-content">
             <a th:href="@{/stays}">숙소</a>
-            <a th:href="@{/}">음식점 & 카페</a>
-            <a th:href="@{/}">관광 명소</a>
+            <a th:href="@{/eaterys}">음식점 & 카페</a>
+            <a th:href="@{/attracions}">관광 명소</a>
           </div>
         </li>
         <li class="main_list"><a class="main" href="/boards">메인게시판</a></li>
-
-        <li class="main_list"><a class="main" href="/" th:if="${#authorization.expression('hasRole(''USER'')')}">마이페이지</a></li>
-        <li class="main_list"><a class="main" href="admin" th:href="@{/admin}" th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
-          관리자페이지
-        </a></li>
-        <a class="main" href="/members/login" th:href="@{/members/login}" th:if="${#authorization.expression('isAnonymous()')}">
-          로그인
-        </a>
-        <a class="main" href="/members/new" th:href="@{/members/new}" th:if="${#authorization.expression('isAnonymous()')}">
-          회원가입
-        </a>
-        <a class="main" href="/members/logout" th:href="@{/members/logout}" th:if="${#authorization.expression('isAuthenticated()')}">
-          로그아웃
-        </a>
+        <li class="main_list dropdown">
+          <a class="main" href="/" th:if="${#authorization.expression('hasRole(''USER'')')}">마이페이지</a>
+          <div class="dropdown-content" th:if="${#authorization.expression('hasRole(''USER'')')}">
+            <a th:if="${#authorization.expression('hasRole(''USER'')')}" th:href="@{/}">회원정보수정</a>
+            <a th:if="${#authorization.expression('hasRole(''USER'')')}" th:href="@{/}">관심리스트</a>
+            <a th:if="${#authorization.expression('hasRole(''USER'')')}" th:href="@{/}">예약/결제내역</a>
+          </div>
+        </li>
+        <li class="main_list"><a class="main" href="admin" th:href="@{/admin}" th:if="${#authorization.expression('hasRole(''ADMIN'')')}">관리자페이지</a></li>
+        <a class="main" href="/members/login" th:href="@{/members/login}" th:if="${#authorization.expression('isAnonymous()')}">로그인</a>
+        <a class="main" href="/members/new" th:href="@{/members/new}" th:if="${#authorization.expression('isAnonymous()')}">회원가입</a>
+        <a class="main" href="/members/logout" th:href="@{/members/logout}" th:if="${#authorization.expression('isAuthenticated()')}">로그아웃</a>
       </ul>
     </nav>
     <hr>
   </header>
-
   <div class="icon_content">
     <ul class="searchBtns">
       <li class="btn_icon">
-        <a class="a1" href="/"><img class="stay_icon"
-            src="/images/여행지아이콘.png"><span>여행지</span> </a>
+        <a class="a1" href="/main/trips">
+          <img class="stay_icon" th:src="@{/images/여행지아이콘.png}"><span>여행지</span> </a>
       </li>
       <li class="btn_icon">
-        <a class="a1" href="/stays"><img class="stay_icon"
-            src="/images/숙박아이콘.png"><span>숙박</span> </a>
+        <a class="a1" href="/stays">
+          <img class="stay_icon" th:src="@{/images/숙박아이콘.png}"><span>숙박</span> </a>
       </li>
       <li class="btn_icon">
-        <a class="a1" href="/eaterys"><img class="stay_icon"
-            src="/images/음식점아이콘.png"><span>맛집</span></a>
+        <a class="a1" href="/">
+          <img class="stay_icon" th:src="@{/images/음식점아이콘.png}"><span>맛집</span></a>
       </li>
       <li class="btn_icon">
-        <a class="a1" href="/attractions"><img class="stay_icon"
-            src="/images/액티비티아이콘.png"><span>액티비티</span> </a>
+        <a class="a1" href="/"><img class="stay_icon" th:src="@{/images/액티비티아이콘.png}"><span>액티비티</span> </a>
       </li>
     </ul>
   </div>
@@ -110,6 +176,7 @@
 <!--    </ul>-->
 <!--  </div><br><br>-->
 
+
   <div class="main_div">
     <div class="slider">
       <div class="slide"></div>
@@ -118,111 +185,46 @@
     </div>
   </div>
 
-  <div class="sub_div2">
+  <div>
     <p class="p_main">이달의 인기 여행지</p>
-    <hr style="width: 50%;"><br>
-    <p class="sub_p">경기/강원</p>
-    <ul class="p_images">
-      <li class="panel_images"><img class="img0"
-          src="/images/경기광주화담숲.png" /></li>
-      <li class="panel_images"><img class="img0"
-          src="/images/경기안산탄도항.png" /></li>
-      <li class="panel_images"><img class="img0"
-          src="/images/경기포천허브아일랜드.png" /></li>
-      <li class="panel_images"><img class="img0"
-          src="/images/강원정선만항재.png" /></li>
-    </ul>
-    <p class="sub_p"> 부산/여수</p>
-    <ul ul class="p_images">
-      <li class="panel_images">
-        <img class="img0" src="/images/부산기장해동용궁사.png" /></li>
-      <li class="panel_images">
-        <img class="img0" src="/images/경남함안낙화놀이.png" /></li>
-      <li class="panel_images">
-        <img class="img0" src="/images/경북경주월정교.png" /></li>
-      <li class="panel_images">
-        <img class="img0" src="/images/전남화순만연사.png" /></li>
-    </ul>
-  </div><br><br>
 
-<!--  <div class="sub_div3">-->
-<!--    <p class="sub_p"> 부산/여수</p>-->
-<!--    <ul ul class="p_images">-->
-<!--      <li class="panel_images">-->
-<!--        <img class="img0" src="/images/부산기장해동용궁사.png" /></li>-->
-<!--      <li class="panel_images">-->
-<!--        <img class="img0" src="/images/경남함안낙화놀이.png" /></li>-->
-<!--      <li class="panel_images">-->
-<!--        <img class="img0" src="/images/경북경주월정교.png" /></li>-->
-<!--      <li class="panel_images">-->
-<!--        <img class="img0" src="/images/전남화순만연사.png" /></li>-->
-<!--    </ul>-->
-<!--  </div>-->
-  <script>
-    function updateDistricts() {
-      var locationSelect = document.getElementById('location');
-      var districtSelect = document.getElementById('district');
+    <form th:action="@{/}" method="get" >
+      <input name="searchQuery" type="search" placeholder="search" arial-label="Search" style="width:60%; text-align:center;" >
+      <button type="submit"> Search</button>
+    </form>
 
-      // 이전에 선택한 구를 초기화
-      districtSelect.innerHTML = '<option value="none">==관할구==</option>';
+    <input type="hidden" name="searchQuery" th:value="${tripSearchDto.searchQuery}" >
+    <div th:if="${not #strings.isEmpty((tripSearchDto.searchQuery))}" class="center" >
+      <p class="h3 font-weight-bold" th:text="${tripSearchDto.searchQuery} + ' 검색 결과'"></p>
+    </div>
 
-      // 선택한 여행지에 따라 관할구 추가
-      if (locationSelect.value === 'seoul') {
-        addOption(districtSelect, '강남구');
-        addOption(districtSelect, '강동구');
-        addOption(districtSelect, '강북구');
-        addOption(districtSelect, '강서구');
-        addOption(districtSelect, '관악구');
-        addOption(districtSelect, '광진구');
-        addOption(districtSelect, '구로구');
-        addOption(districtSelect, '금천구');
-        addOption(districtSelect, '노원구');
-        addOption(districtSelect, '도봉구');
-        addOption(districtSelect, '동대문구');
-        addOption(districtSelect, '동작구');
-        addOption(districtSelect, '마포구');
-        addOption(districtSelect, '서대문구');
-        addOption(districtSelect, '서초구');
-        addOption(districtSelect, '성동구');
-        addOption(districtSelect, '성북구');
-        addOption(districtSelect, '송파구');
-        addOption(districtSelect, '양천구');
-        addOption(districtSelect, '영등포구');
-        addOption(districtSelect, '용산구');
-        addOption(districtSelect, '은평구');
-        addOption(districtSelect, '종로구');
-        addOption(districtSelect, '중구');
-        addOption(districtSelect, '중랑구');
+    <div class="row">
+      <div th:each="trip, status: ${trips.getContent()}" class="col-md-4">
+        <div class="card">
+          <a th:href="'/admin/trip/' + ${trip.id}" th:text="${trip.name}">>></a>
+          <img th:src="${trip.imgUrl}" th:alt="${trip.name}" style="width:300px; height:300px; margin:auto; padding:20px; border-radius:20px;">
+        </div>
+      </div>
+    </div>
+  </div>
 
-      } else if (locationSelect.value === 'busan') {
-        addOption(districtSelect, '강서구');
-        addOption(districtSelect, '금정구');
-        addOption(districtSelect, '기장구');
-        addOption(districtSelect, '해운대구');
-        addOption(districtSelect, '남구');
-        addOption(districtSelect, '동구');
-        addOption(districtSelect, '동래');
-        addOption(districtSelect, '부산진');
-        addOption(districtSelect, '북구');
-        addOption(districtSelect, '사상');
-        addOption(districtSelect, '사하');
-        addOption(districtSelect, '서구');
-        addOption(districtSelect, '수영구');
-        addOption(districtSelect, '중구');
-        addOption(districtSelect, '연제구');
-        addOption(districtSelect, '영도구');
-        // 다른 부산의 관할구들도 추가
-      }
-      // 다른 여행지에 대한 구 추가
-    }
+  <footer>
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section about">
+          <h2>KickTheWorld</h2>
+          <p>KickTheWorld에 오신걸 환영합니다 !</p>
+        </div>
 
-    function addOption(selectElement, optionText) {
-      var option = document.createElement('option');
-      option.value = optionText;
-      option.text = optionText;
-      selectElement.add(option);
-    }
-  </script>
+        <div class="footer-section links">
+          <h2>DEVELOPER</h2>
+          <ul>
+            <li>김은정 / <a href="https://github.com/Kej613">https://github.com/Kej613</a></li>
+            <li>박의연 / <a href="https://github.com/euiyeon0519">https://github.com/euiyeon0519</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </footer>
 </body>
-
 </html>
