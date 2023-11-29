@@ -29,7 +29,7 @@ public class SecurityConfig {
                 .requestMatchers("/members/login").anonymous()
                 .requestMatchers("/members/signup").anonymous()
                 .requestMatchers("/members/logout").authenticated()
-                .requestMatchers("/admin/**").hasAnyRole( "ADMIN")
+//                .requestMatchers("/admin/**").hasAnyRole( "ADMIN")
                 .requestMatchers("/**").permitAll() //해당 경로에 대한 권한 설정
 
                 .anyRequest().authenticated();
