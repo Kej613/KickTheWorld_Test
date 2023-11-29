@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
-                xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="_csrf" th:content="${_csrf.token}"/>
@@ -19,6 +18,7 @@
             });
         });
 
+        //전체 결제 금액
         function calculateToalPrice(){
             var count = $("#count").val();
             var price = $("#price").val();
@@ -26,6 +26,7 @@
             $("#totalPrice").html(totalPrice + '원');
         }
 
+        //예약
         function order(){
             console.log("/////////// button clicked");
             var token = $("meta[name='_csrf']").attr("content");
@@ -150,17 +151,10 @@
                 </div>
             </li>
             <li class="main_list"><a class="main" href="/boards">메인게시판</a></li>
-
             <li class="main_list"><a class="main" href="/" th:if="${#authorization.expression('hasRole(''USER'')')}">마이페이지</a></li>
-            <li class="main_list"><a class="main" href="admin" th:href="@{/admin}" th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
-                관리자페이지
-            </a></li>
-            <a class="main" href="/members/login" th:href="@{/members/login}" th:if="${#authorization.expression('isAnonymous()')}">
-                로그인
-            </a>
-            <a class="main" href="/members/logout" th:href="@{/members/logout}" th:if="${#authorization.expression('isAuthenticated()')}">
-                로그아웃
-            </a>
+            <li class="main_list"><a class="main" href="admin" th:href="@{/admin}" th:if="${#authorization.expression('hasRole(''ADMIN'')')}">관리자페이지</a></li>
+            <a class="main" href="/members/login" th:href="@{/members/login}" th:if="${#authorization.expression('isAnonymous()')}">로그인</a>
+            <a class="main" href="/members/logout" th:href="@{/members/logout}" th:if="${#authorization.expression('isAuthenticated()')}">로그아웃</a>
         </ul>
     </nav>
     <hr>
@@ -173,7 +167,6 @@
         <div class="img_div">
             <img class="image3" th:src="@{/images/신라스테이.webp}">
             <p class="p_stay_title"><span th:text="${stay.name}"></span></p>
-            <p class="p_stay_detail"><span th:text="${stay.detail}"></span></p>
         </div><br><br>
         <div class="wd50">
             <span th:if="${stay.staySellStatus == T(com.example.kicktheworld_test.Stay.Constant.StaySellStatus).SELL}" class="badge badge-primary mgb-15">
@@ -182,34 +175,30 @@
             <span th:unless="${stay.staySellStatus == T(com.example.kicktheworld_test.Stay.Constant.StaySellStatus).SELL}" class="badge btn-danger mgb-15" >
                 예약마감
             </span>
-            <div class="h4" th:text="${stay.name}"></div>
+            <div class="stay_name">
+               <b><p th:text="${stay.name}"></p></b></div>
             <hr class="my-4">
-
+            <p id="detail" th:text="${stay.detail}">
+            <hr class="my-4">
             <div class="text-right">
                 <div class="h4 text-danger text-left">
                     <input type="hidden" th:value="${stay.price}" id="price" name="price">
-                    <span th:text="${stay.price}"></span>원
+                    <span th:text="${stay.price}" style="text-align:right;"></span>원
                 </div>
-<!--                <div class="input-group w-50">-->
-<!--                    <div class="input-group-prepend">-->
-<!--                        <span class="input-group-text">숙박일수</span>-->
-<!--                    </div>-->
-<!--                    <input type="number" name="count" id="count" class="form-control" value="1" min="1">-->
-<!--                </div>-->
             </div>
             <hr class="my-4">
-
             <div class="text-right mgt-50">
-<!--                <h5>결제 금액</h5>-->
-<!--                <h3 name="totalPrice" id="totalPrice" class="font-weight-bold"></h3>-->
+                <!--                <h5>결제 금액</h5>-->
+                <!--                <h3 name="totalPrice" id="totalPrice" class="font-weight-bold"></h3>-->
             </div>
             <div th:if="${stay.staySellStatus == T(com.example.kicktheworld_test.Stay.Constant.StaySellStatus).SELL}" class="text-right">
                 <!--        <button type="button" class="btn btn-light border border-primary btn-lg" onclick="addCart()">장바구니 담기</button>-->
-                <button type="button" class="btn btn-outline-dark" onclick="order()">숙소 예약</button>
+                <button type="button" class="btn btn-outline-dark" onclick="order()" style="text-align:right;">숙소 예약</button>
             </div>
             <div th:unless="${stay.staySellStatus == T(com.example.kicktheworld_test.Stay.Constant.StaySellStatus).SELL}" class="text-right">
                 <button type="button" class="btn btn-danger btn-lg">예약마감</button>
             </div>
+        </div>
         </div>
     </div>
 </div>
@@ -217,22 +206,24 @@
 
 <div class="stay-details">
     <div class="detail-item">
-        위치:<span th:text="${stay.address}"></span>
+        [위치]<span th:text="${stay.address}"></span>
         <div id="map" style="width:80%;height:300px; border-radius:10px; margin-left:auto; margin-right:auto;"></div>
     </div>
+    <hr class="my-4">
     <div class="detail-item">
-        <strong>이용안내:</strong><br>
-        <span th:text="${stay.use_guide}"></span>
+        <strong>[이용안내]</strong><br>
+        <span id="use_guideElement" th:text="${stay.use_guide}"></span>
     </div>
+    <hr class="my-4">
 
     <div class="detail-item">
-        <strong>시설 및 서비스:</strong><br>
-        <span th:text="${stay.service}"></span>
+        <strong>[시설 및 서비스]</strong><br>
+        <span id="serviceElement" th:text="${stay.service}"></span>
     </div>
-
+    <hr class="my-4">
     <div class="detail-item">
-        <strong>예약공지:</strong><br>
-        <span th:text="${stay.amenity}"></span>
+        <strong>[예약공지]</strong><br>
+        <span id="amenityElement" th:text="${stay.amenity}"></span>
     </div>
 
 <!--    <div class="detail-item">-->
@@ -240,18 +231,32 @@
 <!--        <img th:src="@{'/getImage?name=' + ${stay.imageFileName}}" alt="Stay Image"/>-->
 <!--    </div>-->
 <!--  -->
-
 </div>
+
 <div class="button" th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
-<button type="button" id="stay-modify-btn" th:onclick="|location.href='/stays/edit/{stay_id}'|"
-        th:attr="data-stayid=${stay.stay_id}" >수정
-</button>
+<button type="button" id="stay-modify-btn" th:onclick="|location.href='/stays/edit/{stay_id}'|" th:attr="data-stayid=${stay.stay_id}" >수정</button>
 <form th:if="${#authorization.expression('hasRole(''ADMIN'')')}" id="deleteStayForm" th:action="@{'/stays/delete/' + ${stay.stay_id}}" method="post">
 <button type="submit" >삭제</button>
 </form>
 </div>
+
 <script type="text/javascript" th:src="'//dapi.kakao.com/v2/maps/sdk.js?appkey=c2e5cdc145feeac77effa91283d46a6e&libraries=services'"></script>
 <script th:inline="javascript">
+    /*<![CDATA[*/
+    function addLineBreaksAndDisplay(text, elementId) {
+        var paragraphsWithBreaks1 = text.split('.').join('<br>');
+        document.getElementById(elementId).innerHTML = paragraphsWithBreaks1;
+
+    }
+    addLineBreaksAndDisplay('[[${stay.detail}]]','detail') //숙소 상세설명
+    addLineBreaksAndDisplay('[[${stay.use_guide}]]','use_guideElement'); //이용안내
+    addLineBreaksAndDisplay('[[${stay.service}]]', 'serviceElement');  // 시설 및 서비스
+    addLineBreaksAndDisplay('[[${stay.amenity}]]', 'amenityElement');  // 편의시설
+    /*]]>*/
+
+</script>
+<script th:inline="javascript">
+    //카카오맵 API
     /*<![CDATA[*/
     var mapContainer = document.getElementById('map');
     var mapOption = {
@@ -262,7 +267,6 @@
     var map = new kakao.maps.Map(mapContainer, mapOption);
     var geocoder = new kakao.maps.services.Geocoder();
 
-    // Replace '[[${stay.address}]]' with the Thymeleaf expression for stay address
     geocoder.addressSearch('[[${stay.address}]]', function(result, status) {
         if (status === kakao.maps.services.Status.OK) {
             var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
@@ -278,6 +282,7 @@
         }
     });
     /*]]>*/
+
 </script>
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script src="/js/stay.js"></script>

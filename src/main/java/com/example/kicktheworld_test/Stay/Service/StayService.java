@@ -56,10 +56,6 @@ public class StayService {
         return stayRepository.findByCategory(category, address, pageable);
     }
 
-//    public List<Stay> findByCategory(String category, String address, long offset, int limit) {
-//        return stayRepository.findByCategoryNative(category, address, offset, limit);
-//    }
-
     @Transactional
     public Page<Stay> getAdminStayPage(StaySearchDto staySearchDto, Pageable pageable) {
         return stayRepository.getAdminStayPage(staySearchDto, pageable);
