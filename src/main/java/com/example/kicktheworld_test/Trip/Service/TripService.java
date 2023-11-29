@@ -65,7 +65,7 @@ public class TripService {
 //여행지 상세 조회
     @Transactional
     public TripFormDto getTripDtl(Long id){
-        List<TripImg> tripImgList = tripImgRepository.findByIdOrderByIdAsc(id);
+        List<TripImg> tripImgList = tripImgRepository.findByTrip_IdOrderByIdAsc(id);
         List<TripImgDto> tripImgDtoList = new ArrayList<>();
 
         for (TripImg tripImg : tripImgList) {

@@ -9,14 +9,6 @@
     <link th:href="@{/css/stay.css}" rel="stylesheet">
     <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}">
     <style>
-        img {
-            width: 500px;
-            height: 400px;
-            magin-left:auto;
-            margin-right:auto;
-            justify-content: center;
-            text-align:center;
-        }
 
         @font-face {
             font-family: 'Pretendard-Regular';
@@ -113,7 +105,13 @@
 <!--        대표이미지-->
         <div class="d-flex">
             <div class="repImgDiv" >
-<!--                <img th:src="${trip.tripImgDtoList[0].imgUrl}" class = "rounded repImg" th:alt="${trip.name}" style="width:400px; height:400px; margin-rigth:30px;">-->
+                <img th:src="${trip.tripImgDtoList[0].imgUrl}" class = "rounded repImg" th:alt="${trip.name}" style=" width: 500px;
+            height: 400px;
+            margin-left:auto;
+            margin-right:auto;
+            justify-content: center;
+            text-align:center;">
+
                 <h2 th:text="${trip.name}" style="font-size:25px;"></h2>
                 <hr class="my-4">
 
@@ -124,11 +122,12 @@
         </div>
 
         <div th:each="tripImg: ${trip.tripImgDtoList}">
-           <p th:text="${#lists.size(trip.tripImgDtoList)}"></p>
-           <p th:text="${tripImg.imgUrl}"></p>
            <img th:if="${not #strings.isEmpty(tripImg.imgUrl)}" th:src="@{${tripImg.imgUrl}}" >
        </div>
 
+<!--        <div th:each="tripImg, status: ${trip.tripImgDtoList}">-->
+<!--            <img th:if="${not #strings.isEmpty(tripImg.imgUrl)}" th:src="@{${tripImg.imgUrl}}" th:alt="${trip.name}" th:if="${status.index > 0}">-->
+<!--        </div>-->
 
         <hr class="my-4">
 

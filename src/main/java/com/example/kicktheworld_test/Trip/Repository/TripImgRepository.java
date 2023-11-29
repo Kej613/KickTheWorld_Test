@@ -6,5 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface TripImgRepository extends JpaRepository<TripImg, Long> {
-    List<TripImg> findByIdOrderByIdAsc(Long id);
+    List<TripImg> findByTrip_IdOrderByIdAsc(Long id);
+
 }
