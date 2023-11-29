@@ -20,6 +20,18 @@ spring:
         show_sql: true
         format_sql: true
         default_batch_fetch_size: 1000
+
+  servlet:
+    multipart:
+      maxFileSize: 20MB
+      maxRequestSize: 100MB
+
+#tripImgLocation: C:/trip/tripimages
+#uploadPath: file:///C:/trip/
+
+#tripImgLocation: classpath:/static/images/trip
+
+
 #  servlet:
 #    multipart:
 #      enabled: true
